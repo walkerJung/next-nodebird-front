@@ -6,8 +6,8 @@ export const initialState = {
         id: 1,
         nickname: "WalkerJung",
       },
-      content: "첫 번째 게시글 #해시태그 #익스프레스",
-      Image: [
+      content: "첫 번째 게시글 #해시태그 #익스프레스???",
+      Images: [
         {
           src: "https://contents.lotteon.com/itemimage/_v175202/LO/15/10/38/86/83/_1/51/03/88/68/5/LO1510388683_1510388685_1.jpg/dims/optimize/dims/resizemc/360x360",
         },
