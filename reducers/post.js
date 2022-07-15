@@ -4,6 +4,12 @@ export const initialState = {
   mainPosts: [],
   imagePaths: [],
   hasMorePosts: true,
+  likePostsLoading: false,
+  likePostsDone: false,
+  likePostsError: null,
+  unLikePostsLoading: false,
+  unLikePostsDone: false,
+  unLikePostsError: null,
   loadPostsLoading: false,
   loadPostsDone: false,
   loadPostsError: null,
@@ -17,6 +23,14 @@ export const initialState = {
   addCommentDone: false,
   addCommentError: null,
 };
+
+export const LIKE_POSTS_REQUEST = "LIKE_POSTS_REQUEST";
+export const LIKE_POSTS_SUCCESS = "LIKE_POSTS_SUCCESS";
+export const LIKE_POSTS_FAILURE = "LIKE_POSTS_FAILURE";
+
+export const UNLIKE_POSTS_REQUEST = "UNLIKE_POSTS_REQUEST";
+export const UNLIKE_POSTS_SUCCESS = "UNLIKE_POSTS_SUCCESS";
+export const UNLIKE_POSTS_FAILURE = "UNLIKE_POSTS_FAILURE";
 
 export const LOAD_POSTS_REQUEST = "LOAD_POSTS_REQUEST";
 export const LOAD_POSTS_SUCCESS = "LOAD_POSTS_SUCCESS";
@@ -47,6 +61,38 @@ export const addComment = (data) => ({
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
+      case LIKE_POSTS_REQUEST:
+        draft.likePostsLoading = true;
+        draft.likePostsDone = false;
+        draft.likePostsError = null;
+        break;
+      case LIKE_POSTS_SUCCESS: {
+        const post = draft.mainPosts.find((v) => v.id === action.data.PostId);
+        post.Likers.push({ id: action.data.UserId });
+        draft.likePostsLoading = false;
+        draft.likePostsDone = true;
+        break;
+      }
+      case LIKE_POSTS_FAILURE:
+        draft.likePostsLoading = false;
+        draft.likePostsError = action.error;
+        break;
+      case UNLIKE_POSTS_REQUEST:
+        draft.unLikePostsLoading = true;
+        draft.unLikePostsDone = false;
+        draft.unLikePostsError = null;
+        break;
+      case UNLIKE_POSTS_SUCCESS: {
+        const post = draft.mainPosts.find((v) => v.id === action.data.PostId);
+        post.Likers = post.Likers.filter((v) => v.id !== action.data.UserId);
+        draft.unLikePostsLoading = false;
+        draft.unLikePostsDone = true;
+        break;
+      }
+      case UNLIKE_POSTS_FAILURE:
+        draft.unLikePostsLoading = false;
+        draft.unLikePostsError = action.error;
+        break;
       case LOAD_POSTS_REQUEST:
         draft.loadPostsLoading = true;
         draft.loadPostsDone = false;
