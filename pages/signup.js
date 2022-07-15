@@ -6,13 +6,14 @@ import useInput from "../hooks/useInput";
 import styled from "styled-components";
 import { SIGN_UP_REQUEST } from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
-import { Router } from "next/router";
+import { useRouter } from "next/router";
 
 const ErrorMessage = styled.div`
   color: red;
 `;
 
 const Signup = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { signUpLoading, signUpDone, signUpError, me } = useSelector(
     (state) => state.user
@@ -20,13 +21,13 @@ const Signup = () => {
 
   useEffect(() => {
     if (me && me.id) {
-      Router.replace("/");
+      router.replace("/");
     }
   }, [me && me.id]);
 
   useEffect(() => {
     if (signUpDone) {
-      Router.push("/");
+      router.push("/");
     }
   }, [signUpDone]);
 
