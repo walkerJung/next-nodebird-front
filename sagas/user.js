@@ -1,5 +1,5 @@
 import axios from "axios";
-import { all, fork, takeLatest, put, delay, call } from "redux-saga/effects";
+import { all, fork, takeLatest, put, call } from "redux-saga/effects";
 import {
   CHANGE_NICKNAME_FAILURE,
   CHANGE_NICKNAME_REQUEST,
