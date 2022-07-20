@@ -27,7 +27,7 @@ const PostCard = ({ post }) => {
   );
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const id = useSelector((state) => state.user.me?.id);
-  const liked = post.Likers.find((v) => v.id === id);
+  const liked = post?.Likers.find((v) => v.id === id);
 
   const onLike = useCallback(() => {
     if (!id) {
@@ -75,7 +75,7 @@ const PostCard = ({ post }) => {
   return (
     <div style={{ marginBottom: 20 }}>
       <Card
-        cover={post.Images[0] && <PostImages images={post.Images} />}
+        cover={post?.Images[0] && <PostImages images={post?.Images} />}
         actions={[
           <RetweetOutlined key="retweet" onClick={onRetweet} />,
           liked ? (
@@ -109,11 +109,13 @@ const PostCard = ({ post }) => {
           </Popover>,
         ]}
         title={
-          post.RetweetId ? `${post.User.nickname}님이 리트윗 하셨습니다.` : null
+          post?.RetweetId
+            ? `${post.User.nickname}님이 리트윗 하셨습니다.`
+            : null
         }
         extra={id && <FollowButton post={post} />}
       >
-        {post.RetweetId && post.Retweet ? (
+        {post?.RetweetId && post?.Retweet ? (
           <Card
             cover={
               post.Retweet.Images[0] && (
@@ -129,9 +131,9 @@ const PostCard = ({ post }) => {
           </Card>
         ) : (
           <Card.Meta
-            avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
-            title={post.User.nickname}
-            description={<PostCardContent postData={post.content} />}
+            avatar={<Avatar>{post?.User.nickname[0]}</Avatar>}
+            title={post?.User.nickname}
+            description={<PostCardContent postData={post?.content} />}
           />
         )}
       </Card>
