@@ -8,6 +8,7 @@ import { SIGN_UP_REQUEST } from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { END } from "redux-saga";
+import wrapper from "../store/configureStore";
 import axios from "axios";
 
 const ErrorMessage = styled.div`
@@ -143,7 +144,7 @@ const Signup = () => {
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async () => {
+  (store) => async (context) => {
     const cookie = context.req ? context.req.headers.cookie : "";
     axios.defaults.headers.Cookie = "";
     if (context.req && cookie) {

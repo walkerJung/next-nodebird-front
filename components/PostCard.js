@@ -20,6 +20,9 @@ import {
 } from "../reducers/post";
 import FollowButton from "./FollowButton";
 import Link from "next/link";
+import moment from "moment";
+
+moment.locale("ko");
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
@@ -73,6 +76,7 @@ const PostCard = ({ post }) => {
       data: post.id,
     });
   }, [id]);
+
   return (
     <div style={{ marginBottom: 20 }}>
       <Card
@@ -124,6 +128,9 @@ const PostCard = ({ post }) => {
               )
             }
           >
+            <div style={{ float: "right" }}>
+              {moment(post.createdAt).fromNow()}
+            </div>
             <Card.Meta
               avatar={
                 <Link href={`/user/${post.Retweet.User.id}`}>
@@ -137,17 +144,22 @@ const PostCard = ({ post }) => {
             />
           </Card>
         ) : (
-          <Card.Meta
-            avatar={
-              <Link href={`/user/${post.User.id}`}>
-                <a>
-                  <Avatar>{post?.User.nickname[0]}</Avatar>
-                </a>
-              </Link>
-            }
-            title={post?.User.nickname}
-            description={<PostCardContent postData={post?.content} />}
-          />
+          <>
+            <div style={{ float: "right" }}>
+              {moment(post.createdAt).fromNow()}
+            </div>
+            <Card.Meta
+              avatar={
+                <Link href={`/user/${post.User.id}`}>
+                  <a>
+                    <Avatar>{post?.User.nickname[0]}</Avatar>
+                  </a>
+                </Link>
+              }
+              title={post?.User.nickname}
+              description={<PostCardContent postData={post?.content} />}
+            />
+          </>
         )}
       </Card>
       {commentFormOpened && (
